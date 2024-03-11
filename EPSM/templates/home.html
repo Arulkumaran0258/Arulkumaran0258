@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase Plus</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom CSS -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <style type="text/css">
+        /* Your CSS styles here */
+        .output-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .lock-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 9998;
+        }
+        /* Styling for navigation links */
+        .nav-links {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .nav-links a {
+            color: black;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="{{ url_for('userlogin') }}">Login</a>
+    <a href="/about">About Us</a>
+</div>
+    <!-- Your HTML content here -->
+    <div class="container">
+        <h1>Welcome to ParkEase Plus</h1>
+        <p>Select a mall for parking:</p>
+        <div class="list-group" id="parkingPlaces">
+            <!-- Display parking places here -->
+            {% for place in parking_places %}
+                <a href="{{ url_for('parking_slots') }}" class="list-group-item" data-lat="{{ place.latitude }}" data-lon="{{ place.longitude }}">{{ place.parking_slot_name }} - {{ place.location }}</a>
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="form-group">
+            <label for="locationInput">Enter your location:</label>
+            <input type="text" class="form-control" id="locationInput" placeholder="Location">
+        </div>
+        <button class="btn btn-primary" onclick="findNearbyCities()">Find Nearby Cities</button>
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div id="lockOverlay" class="lock-overlay"></div>
+        <div id="nearbyCities" class="output-box"></div>
+        <div id="matchedPlaces" class="output-box" style="display:none;">
+            <h3>Recommended Parking Places or Malls:</h3>
+            <p id="recommendedPlace"></p>
+            {% for place in parking_places %}
+                <a href="{{ url_for('parking_slots') }}" class="list-group-item" data-lat="{{ place.latitude }}" data-lon="{{ place.longitude }}">{{ place.parking_slot_name }} - {{ place.location }}</a>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for finding nearby cities -->
+    <script>
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.getElementById('lockOverlay').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('lockOverlay').style.display = 'none';
+        }
+
+        function findNearbyCities() {
+            showLoading();
+            var locationInput = document.getElementById('locationInput').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/find_nearby_cities', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    hideLoading();
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.error) {
+                            document.getElementById('nearbyCities').innerHTML = response.error;
+                        } else {
+                            var citiesList = response.nearbyCities.join('<br>');
+                            document.getElementById('nearbyCities').innerHTML = citiesList;
+                            displayMatchedPlaces(response.matchedPlaces, locationInput);
+                        }
+                    } else {
+                        alert('Error occurred while processing your request.');
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ location: locationInput }));
+        }
+
+       function displayMatchedPlaces(matchedPlaces, locationInput) {
+    var recommendedPlace = document.getElementById('recommendedPlace');
+    recommendedPlace.textContent = ""; // Clear previous content
+    
+    // Check if any matched places are available in your database
+    var nearestPlace = null;
+    for (var i = 0; i < matchedPlaces.length; i++) {
+        if (matchedPlaces[i].location.toLowerCase().includes(locationInput.toLowerCase())) {
+            nearestPlace = matchedPlaces[i];
+            break;
+        }
+    }
+    
+    if (nearestPlace) {
+        var recommendedPlaceName = nearestPlace.parking_slot_name + ' - ' + nearestPlace.location;
+        recommendedPlace.textContent = recommendedPlaceName;
+    } else {
+        recommendedPlace.textContent = "No nearby locations available in our database.";
+    }
+    document.getElementById('matchedPlaces').style.display = 'block';
+}
+
+
+    </script>
+</body>
+</html>

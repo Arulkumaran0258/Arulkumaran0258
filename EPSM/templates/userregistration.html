@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom CSS -->
+    <style type="text/css">
+       body {
+    font-family: Arial, sans-serif;
+    background-image: url("/static/images/mainbg.jpg"); /* Specify the path to your background image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the background image */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Transparent shade */
+.bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Add a transparent black background */
+    z-index: -1; /* Move the overlay behind other elements */
+}
+
+/* Styling for navigation links */
+.nav-links {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1; /* Ensure navigation links are above the background overlay */
+}
+
+.nav-links a {
+    color: #fff; /* Set link color to white for better visibility */
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* Center credentials */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+    text-align: center;
+    color: #000; /* Set text color to black for better contrast */
+    max-width: 400px; /* Limit the width of the login box */
+    position: relative; /* Add position relative to enable z-index */
+    z-index: 1; /* Ensure the container is above the overlay */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Add some bottom margin to the form fields */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Customize button background color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    border-radius: 5px; /* Add border radius */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+.login-heading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.register-link {
+    font-size: 14px;
+}
+
+    </style>
+
+</head>
+<body>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="{{ url_for('userlogin') }}">Login</a>
+        <a href="/about">About Us</a>
+    </div>
+    <div class="container">
+        <h1>User Registration</h1>
+        <form method="post">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+        <label for="current_password">Confirm Password:</label>
+        <input type="password" id="current_password" name="current_password" required>
+    </div>
+    <button type="submit">Register</button>
+</form>
+
+        <p>Already registered? <a href="{{ url_for('userlogin') }}">Login here</a>.</p>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
