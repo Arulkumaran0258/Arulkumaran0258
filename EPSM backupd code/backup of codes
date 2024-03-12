@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase Plus</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom CSS -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-3">Welcome to ParkEase Plus</h1>
+        <p class="lead">Select a mall for parking:</p>
+        <!-- Initially hide the list of registered malls -->
+        <div class="list-group" id="registeredMalls" style="display: none;">
+            <!-- Dynamically added malls from registered mall owners will be displayed here -->
+            {% for mall_owner in registered_mall_owners %}
+                <a href="/parking_slot/{{ mall_owner.name | lower }}" class="list-group-item list-group-item-action">{{ mall_owner.name }}</a>
+            {% endfor %}
+        </div> 
+        <hr>
+        <button class="btn btn-primary" onclick="getNearbyMalls()">Find Near Me</button>
+        <p id="userLocation"></p>
+        <hr>
+        <h2>Register Your Mall</h2>
+       
+        <p>Are you a mall owner? <a href="/registration">Register your mall here</a>.</p>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- JavaScript to get user location and display nearby registered locations -->
+    <script>
+        function getNearbyMalls() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            document.getElementById("userLocation").innerHTML = "Your location: Latitude " + latitude + ", Longitude " + longitude;
+
+            // Show the list of registered malls
+            document.getElementById("registeredMalls").style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
+######################################################  Home.html   ##################################################################################################
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mall Registration</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-3">Register Your Mall</h1>
+        <form action="{{ url_for('register_mall') }}" method="post">
+            <div class="form-group">
+                <label for="mallName">Mall Name:</label>
+                <input type="text" class="form-control" id="mallName" name="mallName" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already registered? <a href="/">Go back to home</a>.</p>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################rEgisteratio.html ###############################################
+
+from flask import Flask, render_template, request, redirect, url_for
+import mysql.connector
+
+app = Flask(__name__)
+
+# Database connection details
+db_config = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'Kirup#a1',
+    'database': 'epsm1'
+}
+
+@app.route('/')
+def main_index():
+    return render_template('MainIndex.html')
+
+@app.route('/userlogin', methods=['GET', 'POST'])
+def userlogin():
+    if request.method == 'POST':
+        # Handle login form submission
+        username = request.form['username']
+        password = request.form['password']
+        # Validate username and password against database records
+        # Implement your logic here
+        return redirect(url_for('main_index'))
+    else:
+        return render_template('userlogin.html')
+
+@app.route('/userregistration', methods=['GET', 'POST'])
+def userregistration():
+    if request.method == 'POST':
+        # Handle registration form submission
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        current_password = request.form['current_password']  # Add this line
+        # Insert data into the database
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        insert_query = "INSERT INTO users (username, email, password, current_password) VALUES (%s, %s, %s, %s)"
+        cursor.execute(insert_query, (username, email, password, current_password))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect(url_for('main_index'))  # Change 'MainIndex' to 'main_index'
+    else:
+        return render_template('userregistration.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+s
+ ##################################################app.py##############################################################

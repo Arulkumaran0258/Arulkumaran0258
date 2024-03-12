@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ParkEase Plus</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Hide any overflow content */
+        }
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Set z-index to send it to the back */
+            overflow: hidden;
+        }
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%); /* Center the video */
+            z-index: -1; /* Set z-index to send it to the back */
+            opacity: 0.5; /* Adjust opacity for transparency */
+        }
+        .container {
+            position: relative; /* Ensure content appears above the video */
+            text-align: center;
+            margin-top: 100px;
+            z-index: 1; /* Set z-index to keep content above video */
+        }
+        .logo {
+            width: 150px;
+            height: auto;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+        /* Styling for navigation links */
+        .nav-links {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1; /* Set z-index to keep above the video */
+        }
+        .nav-links a {
+            color: #333;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background video container -->
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="/static/images/bg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Navigation links -->
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="{{ url_for('userlogin') }}">Login</a>
+        <a href="/about">About Us</a>
+    </div>
+
+    <!-- Content container -->
+    <div class="container">
+        <img src="/static/images/epsm.png" alt="ParkEase Plus" class="logo">
+        <h1>Welcome to ParkEase Plus</h1>
+        <p>Where parking meets convenience</p>
+        <a href="{{ url_for('userlogin') }}" class="btn btn-custom">User Login</a>
+        <br>
+        <a href="/registration" class="btn btn-custom">Mall Owner Register</a>
+        <a href="/userregistration" class="btn btn-custom">User Register</a>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

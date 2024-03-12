@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Owner Registration</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+          body {
+            font-family: Arial, sans-serif;
+            background-image: url("/static/images/mainbg.jpg"); /* Specify the path to your background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background image */
+            margin: 0;
+            padding: 0;
+        }
+        /* Styling for navigation links */
+        .nav-links {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .nav-links a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+     <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="{{ url_for('userlogin') }}">Login</a>
+    <a href="/about">About Us</a>
+</div>
+    <div class="container">
+        <h1 class="mt-5 mb-3">Register Your Parking Place</h1>
+        <form action="{{ url_for('registration') }}" method="post">
+            <div class="form-group">
+                <label for="parkingName" style="color: white;">Parking Name:</label>
+                <input type="text" class="form-control" id="parkingName" name="parkingName" required>
+            </div>
+            <div class="form-group">
+                <label for="location "  style="color: white;">Location:</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="ownerName"  style="color: white;">Owner Name:</label>
+                <input type="text" class="form-control" id="ownerName" name="ownerName" required>
+            </div>
+            <div class="form-group">
+                <label for="contactNumber"  style="color: white;">Contact Number:</label>
+                <input type="text" class="form-control" id="contactNumber" name="contactNumber" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already registered? <a href="/">Go back to home</a>.</p>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
