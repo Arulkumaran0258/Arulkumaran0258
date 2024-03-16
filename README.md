@@ -31,8 +31,8 @@ I'm a highly motivated and innovative professional with a relentless passion for
 
 ## 🌐 Connect with Me
 
-[LinkedIn]([Arulkumaran M](https://www.linkedin.com/in/arulkumaran-m-bb3a3a258?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)) | [Portfolio Website](https://arulkumaran2503.neocities.org/My%20Portfolio/My%20Portfolio)
+[LinkedIn]([Arulkumaran M](https://www.linkedin.com/in/arulkumaran-m-bb3a3a258?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)) | [Portfolio Website]
 
----
+(https://arulkumaran2503.neocities.org/My%20Portfolio/ArulKumaran-portfolio)
 
 ⭐️ Inspired by [Awesome GitHub Profiles](https://github.com/abhisheknaiidu/awesome-github-profile-readme) and [GitHub Profile README Generator](https://rahuldkjain.github.io/gh-profile-readme-generator/)
