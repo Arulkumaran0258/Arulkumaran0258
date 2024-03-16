@@ -32,7 +32,7 @@ I'm a highly motivated and innovative professional with a relentless passion for
 ## 🌐 Connect with Me
 
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/arulkumaran-m-bb3a3a258/)
-[![Portfolio](https://img.shields.io/badge/-Portfolio-orange?style=flat-square&logo=neocities)](https://arulkumaran2503.neocities.org/My%20Portfolio/ArulKumaran-portfolio/)
+[![Portfolio](https://img.shields.io/badge/-Portfolio-orange?style=flat-square&logo=neocities)](https://arulkumaran2503.neocities.org/My%20Portfolio/ArulKumaran-portfolio)
 
 ---
 
